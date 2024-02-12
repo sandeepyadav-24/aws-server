@@ -3,6 +3,7 @@ const { authenticateJwt, SECRET } = require("../middleware/auth");
 const { User, Course, Admin } = require("../db");
 const router = express.Router();
 
+// Route: 1 POST 
   router.post('/signup', async (req, res) => {
     const { username, password } = req.body;
     const user = await User.findOne({ username });
@@ -15,6 +16,7 @@ const router = express.Router();
       res.json({ message: 'User created successfully', token });
     }
   });
+// Route:2 POST 
   
   router.post('/login', async (req, res) => {
     const { username, password } = req.headers;
@@ -26,12 +28,12 @@ const router = express.Router();
       res.status(403).json({ message: 'Invalid username or password' });
     }
   });
-  
+  // Route:3 GET
   router.get('/courses', authenticateJwt, async (req, res) => {
     const courses = await Course.find({published: true});
     res.json({ courses });
   });
-  
+// Route:4 POST 
   router.post('/courses/:courseId', authenticateJwt, async (req, res) => {
     const course = await Course.findById(req.params.courseId);
     console.log(course);
@@ -48,7 +50,7 @@ const router = express.Router();
       res.status(404).json({ message: 'Course not found' });
     }
   });
-  
+Route:5 GET
   router.get('/purchasedCourses', authenticateJwt, async (req, res) => {
     const user = await User.findOne({ username: req.user.username }).populate('purchasedCourses');
     if (user) {
