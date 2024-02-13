@@ -50,7 +50,7 @@ const router = express.Router();
       res.status(404).json({ message: 'Course not found' });
     }
   });
-Route:5 GET
+//Route:5 GET
   router.get('/purchasedCourses', authenticateJwt, async (req, res) => {
     const user = await User.findOne({ username: req.user.username }).populate('purchasedCourses');
     if (user) {
